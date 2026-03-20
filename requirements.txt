@@ -1,0 +1,15 @@
+# Flask backend
+flask>=3.0,<4.0
+flask-cors>=4.0,<6.0
+requests>=2.31,<3.0
+python-dotenv>=1.0,<2.0
+
+# Streamlit + charts
+streamlit>=1.35,<2.0
+plotly>=5.20,<6.0
+pandas>=2.0,<3.0
+numpy>=1.26,<2.1
+scipy>=1.11
+
+# Testing
+pytest>=8.0,<10.0

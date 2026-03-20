@@ -1,0 +1,410 @@
+{
+  "Duong Ngo Quang Tham": {
+    "slug": "duong_ngo_quang_tham",
+    "path": "models\\forecast_duong_ngo_quang_tham.pkl",
+    "n_train": 1296,
+    "n_val": 228,
+    "date_min": "2022-01-15",
+    "date_max": "2026-03-18",
+    "metrics": {
+      "PM2.5": {
+        "mae": 6.511,
+        "rmse": 9.058
+      },
+      "PM10": {
+        "mae": 7.745,
+        "rmse": 10.346
+      },
+      "SO2": {
+        "mae": 3.382,
+        "rmse": 5.041
+      },
+      "O3": {
+        "mae": 11.654,
+        "rmse": 14.688
+      },
+      "CO": {
+        "mae": 80.205,
+        "rmse": 112.147
+      },
+      "NO2": {
+        "mae": 8.332,
+        "rmse": 11.457
+      }
+    }
+  },
+  "Hem 108 Tran Van Quang": {
+    "slug": "hem_108_tran_van_quang",
+    "path": "models\\forecast_hem_108_tran_van_quang.pkl",
+    "n_train": 1296,
+    "n_val": 228,
+    "date_min": "2022-01-15",
+    "date_max": "2026-03-18",
+    "metrics": {
+      "PM2.5": {
+        "mae": 4.029,
+        "rmse": 5.667
+      },
+      "PM10": {
+        "mae": 7.514,
+        "rmse": 10.246
+      },
+      "SO2": {
+        "mae": 4.185,
+        "rmse": 6.366
+      },
+      "O3": {
+        "mae": 13.058,
+        "rmse": 16.547
+      },
+      "CO": {
+        "mae": 241.649,
+        "rmse": 295.411
+      },
+      "NO2": {
+        "mae": 9.052,
+        "rmse": 12.594
+      }
+    }
+  },
+  "Hiep Thanh": {
+    "slug": "hiep_thanh",
+    "path": "models\\forecast_hiep_thanh.pkl",
+    "n_train": 1296,
+    "n_val": 228,
+    "date_min": "2022-01-15",
+    "date_max": "2026-03-18",
+    "metrics": {
+      "PM2.5": {
+        "mae": 5.417,
+        "rmse": 7.626
+      },
+      "PM10": {
+        "mae": 7.343,
+        "rmse": 10.515
+      },
+      "SO2": {
+        "mae": 4.236,
+        "rmse": 6.857
+      },
+      "O3": {
+        "mae": 9.525,
+        "rmse": 13.449
+      },
+      "CO": {
+        "mae": 68.11,
+        "rmse": 99.305
+      },
+      "NO2": {
+        "mae": 5.0,
+        "rmse": 7.1
+      }
+    }
+  },
+  "Ho Chi Minh City US Consulate": {
+    "slug": "ho_chi_minh_city_us_consulate",
+    "path": "models\\forecast_ho_chi_minh_city_us_consulate.pkl",
+    "n_train": 1296,
+    "n_val": 228,
+    "date_min": "2022-01-15",
+    "date_max": "2026-03-18",
+    "metrics": {
+      "PM2.5": {
+        "mae": 3.933,
+        "rmse": 6.512
+      },
+      "PM10": {
+        "mae": 4.799,
+        "rmse": 6.932
+      },
+      "SO2": {
+        "mae": 5.024,
+        "rmse": 7.273
+      },
+      "O3": {
+        "mae": 8.744,
+        "rmse": 12.168
+      },
+      "CO": {
+        "mae": 153.69,
+        "rmse": 203.894
+      },
+      "NO2": {
+        "mae": 6.393,
+        "rmse": 9.062
+      }
+    }
+  },
+  "Long An TT van hoa huyen Ben Luc": {
+    "slug": "long_an_tt_van_hoa_huyen_ben_luc",
+    "path": "models\\forecast_long_an_tt_van_hoa_huyen_ben_luc.pkl",
+    "n_train": 1296,
+    "n_val": 228,
+    "date_min": "2022-01-15",
+    "date_max": "2026-03-18",
+    "metrics": {
+      "PM2.5": {
+        "mae": 7.49,
+        "rmse": 9.986
+      },
+      "PM10": {
+        "mae": 5.586,
+        "rmse": 7.782
+      },
+      "SO2": {
+        "mae": 4.052,
+        "rmse": 5.599
+      },
+      "O3": {
+        "mae": 13.28,
+        "rmse": 16.577
+      },
+      "CO": {
+        "mae": 264.346,
+        "rmse": 326.522
+      },
+      "NO2": {
+        "mae": 6.889,
+        "rmse": 9.846
+      }
+    }
+  },
+  "Long An TT van hoa huyen Can Giuoc": {
+    "slug": "long_an_tt_van_hoa_huyen_can_giuoc",
+    "path": "models\\forecast_long_an_tt_van_hoa_huyen_can_giuoc.pkl",
+    "n_train": 1296,
+    "n_val": 228,
+    "date_min": "2022-01-15",
+    "date_max": "2026-03-18",
+    "metrics": {
+      "PM2.5": {
+        "mae": 7.635,
+        "rmse": 10.427
+      },
+      "PM10": {
+        "mae": 5.357,
+        "rmse": 7.454
+      },
+      "SO2": {
+        "mae": 3.95,
+        "rmse": 5.306
+      },
+      "O3": {
+        "mae": 10.962,
+        "rmse": 14.263
+      },
+      "CO": {
+        "mae": 179.404,
+        "rmse": 225.023
+      },
+      "NO2": {
+        "mae": 9.435,
+        "rmse": 13.045
+      }
+    }
+  },
+  "Long An xa Duc Lap Ha": {
+    "slug": "long_an_xa_duc_lap_ha",
+    "path": "models\\forecast_long_an_xa_duc_lap_ha.pkl",
+    "n_train": 1296,
+    "n_val": 228,
+    "date_min": "2022-01-15",
+    "date_max": "2026-03-18",
+    "metrics": {
+      "PM2.5": {
+        "mae": 5.693,
+        "rmse": 7.519
+      },
+      "PM10": {
+        "mae": 11.351,
+        "rmse": 28.72
+      },
+      "SO2": {
+        "mae": 5.883,
+        "rmse": 10.472
+      },
+      "O3": {
+        "mae": 6.82,
+        "rmse": 8.784
+      },
+      "CO": {
+        "mae": 166.769,
+        "rmse": 235.584
+      },
+      "NO2": {
+        "mae": 4.624,
+        "rmse": 7.023
+      }
+    }
+  },
+  "Phuoc Hiep": {
+    "slug": "phuoc_hiep",
+    "path": "models\\forecast_phuoc_hiep.pkl",
+    "n_train": 1296,
+    "n_val": 228,
+    "date_min": "2022-01-15",
+    "date_max": "2026-03-18",
+    "metrics": {
+      "PM2.5": {
+        "mae": 4.749,
+        "rmse": 6.51
+      },
+      "PM10": {
+        "mae": 5.924,
+        "rmse": 8.704
+      },
+      "SO2": {
+        "mae": 3.308,
+        "rmse": 5.421
+      },
+      "O3": {
+        "mae": 10.329,
+        "rmse": 13.397
+      },
+      "CO": {
+        "mae": 56.239,
+        "rmse": 81.555
+      },
+      "NO2": {
+        "mae": 2.304,
+        "rmse": 3.385
+      }
+    }
+  },
+  "Tay Ninh Phuong 3 TP Tay Ninh": {
+    "slug": "tay_ninh_phuong_3_tp_tay_ninh",
+    "path": "models\\forecast_tay_ninh_phuong_3_tp_tay_ninh.pkl",
+    "n_train": 1296,
+    "n_val": 228,
+    "date_min": "2022-01-15",
+    "date_max": "2026-03-18",
+    "metrics": {
+      "PM2.5": {
+        "mae": 4.362,
+        "rmse": 6.05
+      },
+      "PM10": {
+        "mae": 7.131,
+        "rmse": 9.623
+      },
+      "SO2": {
+        "mae": 2.758,
+        "rmse": 4.486
+      },
+      "O3": {
+        "mae": 9.962,
+        "rmse": 13.387
+      },
+      "CO": {
+        "mae": 97.165,
+        "rmse": 127.676
+      },
+      "NO2": {
+        "mae": 7.202,
+        "rmse": 10.167
+      }
+    }
+  },
+  "Tay Ninh Thi xa Trang Bang": {
+    "slug": "tay_ninh_thi_xa_trang_bang",
+    "path": "models\\forecast_tay_ninh_thi_xa_trang_bang.pkl",
+    "n_train": 1296,
+    "n_val": 228,
+    "date_min": "2022-01-15",
+    "date_max": "2026-03-18",
+    "metrics": {
+      "PM2.5": {
+        "mae": 3.709,
+        "rmse": 5.134
+      },
+      "PM10": {
+        "mae": 5.812,
+        "rmse": 8.223
+      },
+      "SO2": {
+        "mae": 8.589,
+        "rmse": 11.17
+      },
+      "O3": {
+        "mae": 11.624,
+        "rmse": 16.022
+      },
+      "CO": {
+        "mae": 1174.864,
+        "rmse": 1410.286
+      },
+      "NO2": {
+        "mae": 5.358,
+        "rmse": 7.172
+      }
+    }
+  },
+  "Tp Ho Chi Minh Duong Nguyen Van Tao": {
+    "slug": "tp_ho_chi_minh_duong_nguyen_van_tao",
+    "path": "models\\forecast_tp_ho_chi_minh_duong_nguyen_van_tao.pkl",
+    "n_train": 1296,
+    "n_val": 228,
+    "date_min": "2022-01-15",
+    "date_max": "2026-03-18",
+    "metrics": {
+      "PM2.5": {
+        "mae": 6.426,
+        "rmse": 8.918
+      },
+      "PM10": {
+        "mae": 5.516,
+        "rmse": 7.656
+      },
+      "SO2": {
+        "mae": 4.716,
+        "rmse": 6.128
+      },
+      "O3": {
+        "mae": 11.426,
+        "rmse": 14.484
+      },
+      "CO": {
+        "mae": 104.173,
+        "rmse": 144.386
+      },
+      "NO2": {
+        "mae": 8.009,
+        "rmse": 11.165
+      }
+    }
+  },
+  "phuong 7": {
+    "slug": "phuong_7",
+    "path": "models\\forecast_phuong_7.pkl",
+    "n_train": 1296,
+    "n_val": 228,
+    "date_min": "2022-01-15",
+    "date_max": "2026-03-18",
+    "metrics": {
+      "PM2.5": {
+        "mae": 4.693,
+        "rmse": 6.512
+      },
+      "PM10": {
+        "mae": 6.256,
+        "rmse": 9.045
+      },
+      "SO2": {
+        "mae": 3.165,
+        "rmse": 5.456
+      },
+      "O3": {
+        "mae": 9.394,
+        "rmse": 12.268
+      },
+      "CO": {
+        "mae": 60.058,
+        "rmse": 86.497
+      },
+      "NO2": {
+        "mae": 2.966,
+        "rmse": 4.145
+      }
+    }
+  }
+}

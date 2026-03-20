@@ -1,0 +1,271 @@
+<!doctype html>
+<html lang="vi">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Megacity AQI — Dashboard AI</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@turf/turf@6/turf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4"></script>
+
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+
+<body>
+  <div class="min-h-screen p-4 lg:p-10 space-y-8" style="background:#f0f4f8">
+    <header class="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-6">
+      <div>
+        <h1 class="text-4xl lg:text-5xl font-black tracking-tighter mb-2 italic text-slate-800">
+          MEGACITY <span class="text-orange-500">AQI</span>
+        </h1>
+        <div class="flex items-center gap-3">
+          <div class="px-3 py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center gap-2">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-[10px] font-bold text-emerald-500 uppercase tracking-widest">Live Monitoring</span>
+          </div>
+          <p class="text-gray-500 text-sm font-medium">TP.HCM • Bình Dương • Vũng Tàu</p>
+        </div>
+      </div>
+
+      <div class="flex flex-wrap items-center gap-3">
+        <div class="relative group">
+          <input id="searchInp" type="text" placeholder="Tìm địa điểm..." oninput="debouncedSearch()"
+            class="px-5 py-2.5 rounded-2xl bg-white border border-slate-200 focus:border-blue-400 outline-none w-64 transition-all text-sm text-slate-700 placeholder:text-slate-400">
+          <div id="searchBox" class="search-dropdown absolute"></div>
+        </div>
+        <select id="polSelect" onchange="switchPol(this.value)"
+          class="px-4 py-2.5 rounded-2xl bg-white/5 border border-white/10 text-sm font-semibold text-slate-700 outline-none cursor-pointer hover:bg-white/10 transition-all">
+          <option value="aqi">🌡 AQI</option>
+          <option value="pm25">PM2.5</option>
+          <option value="pm10">PM10</option>
+          <option value="no2">NO₂</option>
+          <option value="o3">O₃</option>
+          <option value="co">CO</option>
+          <option value="so2">SO₂</option>
+        </select>
+        <button id="btnWind" onclick="toggleWind()" title="Bật/tắt hiển thị hướng gió tại các trạm"
+          class="px-4 py-2.5 rounded-2xl bg-white border border-slate-200 hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+          <span id="windDot" class="w-2 h-2 rounded-full bg-sky-400 animate-pulse"></span>
+          <span class="text-sm font-semibold text-slate-700">💨 Wind</span>
+        </button>
+        <button id="btnHeat" onclick="toggleHeatmap()" title="Bật/tắt bản đồ nhiệt chất lượng không khí"
+          class="px-4 py-2.5 rounded-2xl bg-white border border-slate-200 hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+          <span id="heatDot" class="w-2 h-2 rounded-full bg-orange-400 animate-pulse"></span>
+          <span class="text-sm font-semibold text-slate-700">🔥 Heatmap</span>
+        </button>
+        <button id="btnTimeline" onclick="toggleTimeline()" title="Xem diễn biến AQI 24 giờ qua"
+          class="px-4 py-2.5 rounded-2xl bg-white border border-slate-200 hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+          <span id="tlDot" class="w-2 h-2 rounded-full bg-gray-600"></span><span
+            class="text-sm font-semibold text-slate-700">⏱ Timeline</span>
+        </button>
+        <button id="btnCompare" onclick="toggleCompare()" title="So sánh chất lượng không khí giữa 2 điểm"
+          class="px-4 py-2.5 rounded-2xl bg-white border border-slate-200 hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+          <span id="cmpDot" class="w-2 h-2 rounded-full bg-gray-600"></span><span
+            class="text-sm font-semibold text-slate-700">🔀 Compare</span>
+        </button>
+        <button id="btnFlow" onclick="toggleFlow()" title="Hiển thị luồng gió dạng hạt (particle flow)"
+          class="px-4 py-2.5 rounded-2xl bg-white border border-slate-200 hover:bg-slate-50 transition-all flex items-center gap-2 shadow-sm">
+          <span id="flowDot" class="w-2 h-2 rounded-full bg-gray-600"></span><span
+            class="text-sm font-semibold text-slate-700">🌊 Flow</span>
+        </button>
+        <button onclick="location.reload()" title="Tải lại toàn bộ dữ liệu"
+          class="px-4 py-2.5 rounded-2xl bg-white border border-slate-200 hover:bg-slate-50 transition-all shadow-sm">
+          <span class="text-sm font-semibold text-slate-700">🔄 Refresh</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="grid grid-cols-12 gap-6 lg:gap-10">
+      <div class="col-span-12 lg:col-span-7 xl:col-span-8">
+        <div class="glass rounded-[16px] p-2 relative bg-white">
+          <div id="map"></div>
+          <canvas id="flowCanvas"></canvas>
+
+          <div id="timeSliderBox"
+            class="absolute bottom-16 left-6 right-24 z-[1000] glass px-4 py-3 rounded-2xl time-slider"
+            style="display:none">
+            <div class="flex items-center gap-3">
+              <button id="btnPlay" onclick="startPlayback()" class="text-lg hover:scale-110 transition">▶️</button>
+              <input type="range" id="timeRange" min="0" max="23" value="23" class="flex-1"
+                oninput="stopPlayback(); applyTimeIndex(parseInt(this.value))">
+              <span id="timeLabel" class="text-xs font-bold text-orange-400 w-16 text-right">Now</span>
+            </div>
+          </div>
+
+          <div id="comparePanel" class="absolute top-6 right-6 z-[1000] flex gap-3" style="display:none">
+            <div class="compare-card" id="cmpA">
+              <div class="text-[10px] text-orange-400 font-bold mb-2">📍 POINT A</div>
+              <div class="text-xs text-gray-500">Click map...</div>
+            </div>
+            <div class="text-white/20 flex items-center font-bold">VS</div>
+            <div class="compare-card" id="cmpB">
+              <div class="text-[10px] text-sky-400 font-bold mb-2">📍 POINT B</div>
+              <div class="text-xs text-gray-500">Click map...</div>
+            </div>
+          </div>
+
+          <div class="absolute bottom-8 right-8 z-[1000] glass px-4 py-3 rounded-2xl text-[9px] space-y-1 text-slate-700">
+            <div class="text-[8px] font-bold text-slate-500 uppercase mb-1">AQI Scale</div>
+            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-sky-400"></span> Good (0-50)
+            </div>
+            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Moderate
+              (51-100)</div>
+            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span> Sensitive
+              (101-150)</div>
+            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-orange-500"></span> Unhealthy
+              (151-200)</div>
+            <div class="flex items-center gap-2"><span class="w-1.5 h-1.5 rounded-full bg-rose-600"></span> Hazardous
+              (>200)</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-span-12 lg:col-span-5 xl:col-span-4 space-y-6">
+        <div class="glass rounded-[24px] p-8 relative overflow-hidden group bg-white">
+          <div class="relative z-10">
+            <div class="flex justify-between items-start mb-6">
+              <div>
+                <h2 id="locName" class="text-xl font-bold text-slate-800 mb-1">--</h2>
+                <p id="latlng" class="text-xs text-slate-500 font-mono tracking-tighter">--</p>
+              </div>
+              <div id="mainStatus"
+                class="px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border border-white/5">
+                --</div>
+            </div>
+            <div class="flex items-baseline gap-1 mb-8">
+              <span id="mainVal" class="text-8xl font-black tracking-tighter text-slate-800">--</span>
+              <span id="mainLabel" class="text-xl font-bold text-gray-500 uppercase italic">--</span>
+            </div>
+            <div class="grid grid-cols-3 gap-3">
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                <div class="text-[9px] text-slate-500 font-bold uppercase mb-1">Temp</div>
+                <div id="wTemp" class="text-sm font-black">--</div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                <div class="text-[9px] text-slate-500 font-bold uppercase mb-1">Humid</div>
+                <div id="wHum" class="text-sm font-black">--</div>
+              </div>
+              <div class="p-3 rounded-xl bg-slate-50 border border-slate-100">
+                <div class="text-[9px] text-slate-500 font-bold uppercase mb-1">Wind</div>
+                <div id="wWind" class="text-sm font-black">--</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass rounded-[16px] p-6 bg-white">
+          <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest mb-6">🧪 Pollutants</h3>
+          <div class="space-y-5">
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-baseline"><span
+                  class="text-[10px] font-bold text-slate-500 uppercase">PM2.5</span><span id="pm25Val"
+                  class="text-sm font-black">--</span></div>
+              <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div id="pm25Bar" class="pol-bar w-0"></div>
+              </div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-baseline"><span
+                  class="text-[10px] font-bold text-slate-500 uppercase">PM10</span><span id="pm10Val"
+                  class="text-sm font-black">--</span></div>
+              <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div id="pm10Bar" class="pol-bar w-0"></div>
+              </div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-baseline"><span
+                  class="text-[10px] font-bold text-slate-500 uppercase">NO2</span><span id="no2Val"
+                  class="text-sm font-black">--</span></div>
+              <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div id="no2Bar" class="pol-bar w-0"></div>
+              </div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-baseline"><span
+                  class="text-[10px] font-bold text-slate-500 uppercase">O3</span><span id="o3Val"
+                  class="text-sm font-black">--</span></div>
+              <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div id="o3Bar" class="pol-bar w-0"></div>
+              </div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-baseline"><span
+                  class="text-[10px] font-bold text-slate-500 uppercase">CO</span><span id="coVal"
+                  class="text-sm font-black">--</span></div>
+              <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div id="coBar" class="pol-bar w-0"></div>
+              </div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex justify-between items-baseline"><span
+                  class="text-[10px] font-bold text-slate-500 uppercase">SO2</span><span id="so2Val"
+                  class="text-sm font-black">--</span></div>
+              <div class="h-1.5 bg-slate-100 rounded-full overflow-hidden">
+                <div id="so2Bar" class="pol-bar w-0"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass rounded-[16px] overflow-hidden flex flex-col bg-white" style="height: 400px;">
+          <div class="p-4 border-b border-slate-100 bg-slate-50/80"><span
+              class="text-[10px] font-bold uppercase tracking-widest">AI Expert — <span
+                class="groq-badge">Groq</span></span></div>
+          <div id="chatMessages" class="flex-1 overflow-y-auto p-4 space-y-4"></div>
+          <div class="p-4 bg-slate-50/80">
+            <div class="relative">
+              <input id="chatInput" type="text" placeholder="Hỏi AI..."
+                class="w-full chat-input px-4 py-3 rounded-2xl text-sm">
+              <button onclick="sendChat()" class="absolute right-2 top-2 p-1.5 text-emerald-500">🚀</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass rounded-[16px] p-6 bg-white">
+          <div class="flex justify-between items-center mb-4">
+            <h3 class="text-xs font-bold text-slate-400 uppercase tracking-widest">📈 24h Trend</h3>
+            <select id="chartPol" onchange="loadChart()" class="text-[10px] font-bold px-2 py-1 rounded-xl bg-white border border-slate-200 text-slate-700">
+              <option value="aqi">AQI</option>
+              <option value="pm25">PM2.5</option>
+              <option value="pm10">PM10</option>
+              <option value="no2">NO₂</option>
+              <option value="o3">O₃</option>
+              <option value="co">CO</option>
+              <option value="so2">SO₂</option>
+            </select>
+          </div>
+          <canvas id="trendCanvas" height="150"></canvas>
+        </div>
+
+        <div class="glass rounded-[32px] p-6 space-y-4">
+          <div class="flex justify-between text-[10px] font-bold text-slate-400 uppercase">
+            <span>📡 Stations</span>
+            <div class="flex gap-3"><span class="text-emerald-500">Core: <span id="corePool">0</span></span><span
+                class="text-orange-500">Buffer: <span id="bufPool">0</span></span></div>
+          </div>
+          <div id="stList" class="grid grid-cols-1 gap-2 max-h-40 overflow-y-auto pr-1"></div>
+        </div>
+      </div>
+    </main>
+    <div class="hidden text-emerald-400 text-rose-400"></div> <!-- Tailwind Purge Guard -->
+  </div>
+
+  <script src="js/core.js"></script>
+  <script src="js/wind.js"></script>
+  <script src="js/features.js"></script>
+  <script src="js/app.js"></script>
+
+<script>
+// Light theme patches applied at runtime
+document.addEventListener('DOMContentLoaded', function() {
+    // Override flow canvas fill for light bg
+    const _origAnimateFlow = window.animateFlow;
+});
+</script>
+</body>
+
+</html>

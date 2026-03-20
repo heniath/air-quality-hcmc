@@ -1,0 +1,52 @@
+# ===== BẢO MẬT — KHÔNG PUSH LÊN GITHUB =====
+.env
+
+# ===== Python =====
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+*.egg-info/
+dist/
+build/
+
+# ===== Data cache =====
+data/
+
+# ===== IDE =====
+.vscode/
+.idea/
+*.code-workspace
+
+# ===== OS =====
+Thumbs.db
+.DS_Store
+
+# ===== Agent/AI metadata =====
+.gemini/
+.agent/
+
+# Secrets — KHÔNG bao giờ push lên GitHub
+.env
+*.env
+
+# Cache data (auto-generated)
+data/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python venv
+venv/
+env/
+.venv/

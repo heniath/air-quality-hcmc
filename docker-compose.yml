@@ -1,0 +1,11 @@
+services:
+  aqi-app:
+    build: .
+    container_name: megacity-aqi
+    ports:
+      - "5501:5501"
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+    restart: always

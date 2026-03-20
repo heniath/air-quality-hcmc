@@ -1,0 +1,11 @@
+# railway.toml
+# Defines 2 services trong cùng 1 Railway project
+
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "python server.py"
+healthcheckPath = "/api/health"
+healthcheckTimeout = 30
+restartPolicyType = "on_failure"

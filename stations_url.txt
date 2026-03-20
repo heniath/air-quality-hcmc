@@ -1,0 +1,25 @@
+# ===== CORE (Megacity: HCM + Bình Dương + Bà Rịa-Vũng Tàu) — 7 trạm =====
+
+# Bình Dương (1 trạm)
+https://apiserver.aqi.in/aqi/v3/getLocationDetailsBySlug?slug=vietnam/binh-duong/thanh-pho-thu-dau-mot/hiep-thanh&type=4&source=web
+
+# Hồ Chí Minh (4 trạm)
+https://apiserver.aqi.in/aqi/v3/getLocationDetailsBySlug?slug=vietnam/ho-chi-minh/ho-chi-minh-city/hem-108-tran-van-quang&type=4&source=web
+https://apiserver.aqi.in/aqi/v3/getLocationDetailsBySlug?slug=vietnam/ho-chi-minh/ho-chi-minh-city/ho-chi-minh-city-us-consulate&type=4&source=web
+https://apiserver.aqi.in/aqi/v3/getLocationDetailsBySlug?slug=vietnam/ho-chi-minh/ho-chi-minh-city/duong-ngo-quang-tham&type=4&source=web
+https://apiserver.aqi.in/aqi/v3/getLocationDetailsBySlug?slug=vietnam/ho-chi-minh/ho-chi-minh-city/tp-ho-chi-minh-duong-nguyen-van-tao&type=4&source=web
+
+# Bà Rịa - Vũng Tàu (2 trạm)
+https://apiserver.aqi.in/aqi/v3/getLocationDetailsBySlug?slug=vietnam/ba-ria-vung-tau/vung-tau/phuong-7&type=4&source=web
+https://apiserver.aqi.in/aqi/v3/getLocationDetailsBySlug?slug=vietnam/ba-ria-vung-tau/thanh-pho-ba-ria/phuoc-hiep&type=4&source=web
+
+# ===== BUFFER (bên ngoài megacity, hỗ trợ IDW biên) — 5 trạm =====
+
+# Long An (3 trạm) — slug cuối bắt đầu bằng "long-an" dù URL path ghi ho-chi-minh
+https://apiserver.aqi.in/aqi/v3/getLocationDetailsBySlug?slug=vietnam/ho-chi-minh/ho-chi-minh-city/long-an-xa-duc-lap-ha&type=4&source=web
+https://apiserver.aqi.in/aqi/v3/getLocationDetailsBySlug?slug=vietnam/long-an/tan-an/long-an-tt-van-hoa-huyen-ben-luc&type=4&source=web
+https://apiserver.aqi.in/aqi/v3/getLocationDetailsBySlug?slug=vietnam/ho-chi-minh/ho-chi-minh-city/long-an-tt-van-hoa-huyen-can-giuoc&type=4&source=web
+
+# Tây Ninh (2 trạm) — slug cuối bắt đầu bằng "tay-ninh" dù URL path ghi binh-duong
+https://apiserver.aqi.in/aqi/v3/getLocationDetailsBySlug?slug=vietnam/binh-duong/thu-dau-mot/tay-ninh-thi-xa-trang-bang&type=4&source=web
+https://apiserver.aqi.in/aqi/v3/getLocationDetailsBySlug?slug=vietnam/tay-ninh/tay-ninh/tay-ninh-phuong-3-tp-tay-ninh&type=4&source=web

@@ -1,0 +1,11 @@
+# railway_streamlit.toml
+# Dùng cho Streamlit service (service thứ 2 trong Railway)
+
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "streamlit run streamlit_app.py --server.port $PORT --server.address 0.0.0.0 --server.headless true"
+healthcheckPath = "/_stcore/health"
+healthcheckTimeout = 30
+restartPolicyType = "on_failure"
